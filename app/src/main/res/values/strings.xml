@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RecipeApp</string>
+    <string name="type">Type</string>
+    <string name="serving">Serving</string>
+    <string name="difficultyLevel">Difficulty Level</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="preparationSteps">Preparation Steps</string>
+</resources>

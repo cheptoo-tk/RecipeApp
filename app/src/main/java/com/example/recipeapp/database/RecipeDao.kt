@@ -1,7 +1,7 @@
-package com.example.recipeapp.data
+package com.example.recipeapp.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.recipeapp.data.Recipe
 
 @Dao
 interface RecipeDao {

@@ -8,11 +8,14 @@ import androidx.activity.viewModels
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.recipeapp.data.DataProvider
 import com.example.recipeapp.data.Recipe
 import com.example.recipeapp.ui.theme.RecipeAppTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
-
+class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +32,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        launch {
+            DataProvider.saveToDatabase(applicationContext)
+        }
     }
 }
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyApp(navigateToProfile: (Recipe) -> Unit) {

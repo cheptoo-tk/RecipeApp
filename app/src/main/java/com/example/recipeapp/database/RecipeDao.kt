@@ -1,16 +1,15 @@
 package com.example.recipeapp.database
 
 import androidx.room.*
-import com.example.recipeapp.data.Recipe
 
 @Dao
 interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecipe(recipe: Recipe)
+    fun insertRecipe(recipe: RecipeEntity)
 
-    @Update
-    fun update(recipe: Recipe)
+    @Query("SELECT * FROM recipestable")
+    fun getRecipes(): List<RecipeEntity>
 
-    @Delete
-    fun deleteRecipe(recipe: Recipe)
+    @Query("DELETE FROM recipestable")
+    fun deleteRecipes()
 }

@@ -1,6 +1,10 @@
 package com.example.recipeapp.data
 
+import android.content.Context
 import com.example.recipeapp.R
+import com.example.recipeapp.database.RecipeEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object DataProvider {
     val recipe =
@@ -293,4 +297,44 @@ object DataProvider {
             recipeImageId = R.drawable.f10
         ),
     )
+    suspend fun saveToDatabase(context: Context) {
+        val database = Provider.getDatabase(context)
+        val recipeDao = database.recipeDatabaseDao()
+
+        withContext(Dispatchers.IO) {
+            recipeDao.deleteRecipes()
+
+            recipeList.forEach { recipe ->
+                val recipeEntity = RecipeEntity(
+                    id = recipe.id,
+                    title = recipe.title,
+                    type = recipe.type,
+                    serving = recipe.serving,
+                    difficultyLevel = recipe.difficultyLevel,
+                    ingredients = recipe.ingredients,
+                    preparationSteps = recipe.preparationSteps,
+                    recipeImageId = recipe.recipeImageId
+                )
+                recipeDao.insertRecipe(recipeEntity)
+            }
+        }
+    }
+    fun retrieveFromDatabase(context: Context): List<Recipe> {
+        val database = Provider.getDatabase(context)
+        val recipeDao = database.recipeDatabaseDao()
+        val recipesEntity = recipeDao.getRecipes()
+
+        return recipesEntity.map { recipeEntity ->
+            Recipe(
+                id = recipe.id,
+                title = recipe.title,
+                type = recipe.type,
+                serving = recipe.serving,
+                difficultyLevel = recipe.difficultyLevel,
+                ingredients = recipe.ingredients,
+                preparationSteps = recipe.preparationSteps,
+                recipeImageId = recipe.recipeImageId
+            )
+        }
+    }
 }

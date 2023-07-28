@@ -1,8 +1,12 @@
-package com.example.recipeapp.data
+package com.example.recipeapp.database
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
-data class Recipe(
+@Entity(tableName = "recipestable")
+data class RecipeEntity(
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     val title: String,
     val type: String,
